@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Heart Disease Prediction</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f9eef1;
+            color: #2d2024;
+        }
+
+        .page {
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #650b27 0px,
+                    #8f1237 360px,
+                    #d94d70 620px,
+                    #f9eef1 900px
+                );
+        }
+
+
+        /* =====================================
+           HERO
+        ====================================== */
+
+        .hero {
+            height: 430px;
+            position: relative;
+            overflow: hidden;
+            color: white;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+
+            width: 650px;
+            height: 270px;
+
+            left: -170px;
+            bottom: -120px;
+
+            border-radius: 50%;
+
+            border: 35px solid rgba(255, 83, 122, 0.22);
+
+            transform: rotate(15deg);
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+
+            width: 500px;
+            height: 250px;
+
+            right: -120px;
+            bottom: -120px;
+
+            background: rgba(255, 58, 112, 0.12);
+
+            border-radius: 50%;
+        }
+
+        .hero-inner {
+            width: 90%;
+            max-width: 930px;
+
+            margin: auto;
+
+            position: relative;
+            z-index: 2;
+
+            text-align: center;
+
+            padding-top: 25px;
+        }
+
+
+        /* LOGO */
+
+        .logo-box {
+            width: 225px;
+            height: 82px;
+
+            background: white;
+
+            border-radius: 13px;
+
+            margin: auto;
+
+            padding: 10px 16px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            box-shadow: 0 10px 25px rgba(0,0,0,.18);
+        }
+
+        .logo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+
+        /* TAGLINE */
+
+        .tagline {
+            margin-top: 18px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            gap: 14px;
+
+            font-size: 11px;
+            font-weight: bold;
+
+            letter-spacing: 4px;
+
+            color: rgba(255,255,255,.9);
+        }
+
+        .tagline .line {
+            height: 1px;
+            width: 80px;
+
+            background: rgba(255,255,255,.45);
+        }
+
+        .dot {
+            color: #ff8ca8;
+        }
+
+
+        /* HERO CONTENT */
+
+        .hero-main {
+            margin-top: 27px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            gap: 55px;
+        }
+
+        .hero-text {
+            text-align: left;
+        }
+
+        .hero-text h1 {
+            font-family: Georgia, "Times New Roman", serif;
+
+            font-size: 56px;
+            line-height: .98;
+
+            letter-spacing: -1px;
+
+            text-shadow: 0 5px 15px rgba(0,0,0,.12);
+        }
+
+        .hero-text h1 span {
+            color: #f3a0b7;
+        }
+
+        .hero-text p {
+            margin-top: 18px;
+
+            font-size: 14px;
+
+            color: rgba(255,255,255,.85);
+        }
+
+
+        /* HEART DESIGN */
+
+        .heart-area {
+            width: 190px;
+            height: 160px;
+
+            position: relative;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .heart-glow {
+            position: absolute;
+
+            width: 150px;
+            height: 150px;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(255, 90, 130, .30),
+                    rgba(255, 90, 130, .05) 65%,
+                    transparent 70%
+                );
+
+            border: 1px solid rgba(255,255,255,.08);
+        }
+
+        .heart-symbol {
+            position: relative;
+            z-index: 3;
+
+            font-size: 100px;
+
+            color: #ef355f;
+
+            filter:
+                drop-shadow(0 12px 15px rgba(50,0,15,.25));
+        }
+
+
+        /* ECG */
+
+        .ecg-line {
+            position: absolute;
+
+            width: 230px;
+            height: 60px;
+
+            left: -20px;
+            top: 58px;
+
+            z-index: 1;
+        }
+
+        .ecg-line svg {
+            width: 100%;
+            height: 100%;
+        }
+
+
+        /* =====================================
+           CARD
+        ====================================== */
+
+        .card-wrapper {
+            width: 92%;
+            max-width: 930px;
+
+            margin: -65px auto 0;
+
+            position: relative;
+            z-index: 10;
+        }
+
+        .card {
+            background: rgba(255,255,255,.97);
+
+            border-radius: 19px;
+
+            padding: 34px 42px 38px;
+
+            box-shadow:
+                0 25px 60px rgba(83, 0, 27, .18);
+        }
+
+
+        /* CARD HEADER */
+
+        .card-header {
+            text-align: center;
+
+            margin-bottom: 30px;
+        }
+
+        .card-header h2 {
+            font-family: Georgia, "Times New Roman", serif;
+
+            color: #821331;
+
+            font-size: 31px;
+        }
+
+        .small-line {
+            width: 48px;
+            height: 3px;
+
+            margin: 10px auto 15px;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #8c1234,
+                    #e0587b
+                );
+        }
+
+        .card-header p {
+            color: #9a9295;
+
+            font-size: 14px;
+        }
+
+
+        /* =====================================
+           FORM
+        ====================================== */
+
+        form {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 25px 30px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            margin-bottom: 8px;
+
+            font-size: 13px;
+            font-weight: 700;
+
+            color: #2d2427;
+        }
+
+        input,
+        select {
+            width: 100%;
+            height: 48px;
+
+            border: 1.5px solid #efbdc9;
+
+            border-radius: 9px;
+
+            padding: 0 14px;
+
+            background: white;
+
+            font-size: 14px;
+
+            outline: none;
+
+            color: #444;
+
+            transition: .2s;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #a81640;
+
+            box-shadow:
+                0 0 0 3px rgba(168,22,64,.07);
+        }
+
+        input::placeholder {
+            color: #aaa;
+        }
+
+        .hint {
+            margin-top: 6px;
+
+            font-size: 11px;
+
+            color: #aaa;
+        }
+
+
+        /* =====================================
+           BUTTON
+        ====================================== */
+
+        .button-area {
+            grid-column: 1 / -1;
+
+            margin-top: 3px;
+        }
+
+        .predict-btn {
+            width: 100%;
+
+            height: 52px;
+
+            border: none;
+            border-radius: 9px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #861032,
+                    #ad1843,
+                    #d82e59
+                );
+
+            color: white;
+
+            font-size: 15px;
+            font-weight: 700;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 8px 20px rgba(148,17,53,.20);
+
+            transition: .25s;
+        }
+
+        .predict-btn:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 12px 25px rgba(148,17,53,.28);
+        }
+
+
+        /* =====================================
+           DEFAULT RESULT BOX
+        ====================================== */
+
+        .prediction-placeholder {
+            margin-top: 25px;
+
+            min-height: 95px;
+
+            border: 1px dashed #edb6c4;
+
+            border-radius: 13px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #fff9fa,
+                    #fff2f5
+                );
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            text-align: left;
+
+            gap: 18px;
+
+            padding: 20px;
+        }
+
+        .result-circle {
+            width: 50px;
+            height: 50px;
+
+            flex-shrink: 0;
+
+            border-radius: 50%;
+
+            background: #f7dce3;
+
+            position: relative;
+        }
+
+        .result-circle::before {
+            content: "";
+
+            position: absolute;
+
+            width: 16px;
+            height: 16px;
+
+            background: #b91d48;
+
+            transform: rotate(45deg);
+
+            left: 17px;
+            top: 19px;
+
+            border-radius: 2px;
+        }
+
+        .placeholder-text h3 {
+            color: #a31a40;
+
+            font-size: 14px;
+
+            margin-bottom: 6px;
+        }
+
+        .placeholder-text p {
+            color: #aaa;
+
+            font-size: 11px;
+        }
+
+
+        /* =====================================
+           ACTUAL RESULT
+        ====================================== */
+
+        .result {
+            margin-top: 25px;
+
+            padding: 22px;
+
+            border-radius: 12px;
+
+            text-align: center;
+        }
+
+        .result h3 {
+            font-family: Georgia, "Times New Roman", serif;
+
+            font-size: 21px;
+
+            margin-bottom: 7px;
+        }
+
+        .result p {
+            font-size: 13px;
+        }
+
+        .positive {
+            color: #a4183c;
+
+            background: #fff0f3;
+
+            border: 1px solid #efbac6;
+        }
+
+        .negative {
+            color: #237242;
+
+            background: #effaf3;
+
+            border: 1px solid #b8dfc5;
+        }
+
+
+        /* ERROR */
+
+        .error {
+            margin-top: 20px;
+
+            padding: 15px;
+
+            border-radius: 9px;
+
+            background: #fff0f0;
+
+            color: #a52020;
+
+            text-align: center;
+
+            font-size: 13px;
+        }
+
+
+        /* =====================================
+           ABOUT
+        ====================================== */
+
+        .about {
+            width: 90%;
+            max-width: 700px;
+
+            margin: 50px auto 70px;
+
+            text-align: center;
+        }
+
+        .about h2 {
+            font-family: Georgia, "Times New Roman", serif;
+
+            color: #7c102f;
+
+            font-size: 27px;
+
+            margin-bottom: 13px;
+        }
+
+        .about p {
+            color: #7e7477;
+
+            font-size: 13px;
+
+            line-height: 1.8;
+        }
+
+
+        /* =====================================
+           FOOTER
+        ====================================== */
+
+        footer {
+            min-height: 180px;
+
+            position: relative;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    110deg,
+                    #51091e,
+                    #84102f,
+                    #c0244e
+                );
+
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            padding: 55px 20px 35px;
+        }
+
+        footer::before {
+            content: "";
+
+            position: absolute;
+
+            width: 120%;
+            height: 100px;
+
+            left: -10%;
+            top: -70px;
+
+            background: #f9eef1;
+
+            border-radius: 0 0 50% 50%;
+        }
+
+        .footer-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-content p {
+            font-size: 12px;
+
+            color: rgba(255,255,255,.75);
+
+            margin-bottom: 7px;
+
+            letter-spacing: 1px;
+        }
+
+        .footer-content h2 {
+            font-family: Georgia, "Times New Roman", serif;
+
+            font-size: 25px;
+
+            margin-bottom: 8px;
+        }
+
+        .footer-content span {
+            font-size: 11px;
+
+            letter-spacing: 4px;
+
+            text-transform: uppercase;
+
+            color: rgba(255,255,255,.72);
+        }
+
+
+        /* =====================================
+           MOBILE
+        ====================================== */
+
+        @media(max-width: 650px) {
+
+            .hero {
+                height: 385px;
+            }
+
+            .hero-inner {
+                padding-top: 17px;
+            }
+
+            .logo-box {
+                width: 155px;
+                height: 57px;
+
+                border-radius: 9px;
+            }
+
+            .tagline {
+                margin-top: 12px;
+
+                font-size: 8px;
+
+                letter-spacing: 2px;
+
+                gap: 7px;
+            }
+
+            .tagline .line {
+                width: 38px;
+            }
+
+            .hero-main {
+                margin-top: 22px;
+
+                gap: 8px;
+            }
+
+            .hero-text h1 {
+                font-size: 37px;
+            }
+
+            .hero-text p {
+                font-size: 9px;
+                margin-top: 11px;
+            }
+
+            .heart-area {
+                width: 110px;
+                height: 110px;
+            }
+
+            .heart-symbol {
+                font-size: 67px;
+            }
+
+            .heart-glow {
+                width: 100px;
+                height: 100px;
+            }
+
+            .ecg-line {
+                width: 135px;
+                left: -12px;
+                top: 38px;
+            }
+
+
+            /* CARD */
+
+            .card-wrapper {
+                width: 90%;
+
+                margin-top: -78px;
+            }
+
+            .card {
+                padding: 24px 20px 27px;
+
+                border-radius: 14px;
+            }
+
+            .card-header {
+                margin-bottom: 23px;
+            }
+
+            .card-header h2 {
+                font-size: 24px;
+            }
+
+            .card-header p {
+                font-size: 11px;
+            }
+
+
+            /* KEEP TWO COLUMNS LIKE YOUR IMAGE */
+
+            form {
+                grid-template-columns: 1fr 1fr;
+
+                gap: 18px 15px;
+            }
+
+            label {
+                font-size: 10px;
+            }
+
+            input,
+            select {
+                height: 39px;
+
+                padding: 0 9px;
+
+                font-size: 10px;
+
+                border-radius: 7px;
+            }
+
+            .hint {
+                font-size: 8px;
+            }
+
+            .predict-btn {
+                height: 43px;
+
+                font-size: 11px;
+            }
+
+            .prediction-placeholder {
+                min-height: 80px;
+
+                padding: 15px;
+
+                margin-top: 18px;
+            }
+
+            .result-circle {
+                width: 42px;
+                height: 42px;
+            }
+
+            .result-circle::before {
+                left: 14px;
+                top: 16px;
+            }
+
+            .placeholder-text h3 {
+                font-size: 10px;
+            }
+
+            .placeholder-text p {
+                font-size: 8px;
+            }
+
+            .about {
+                margin: 35px auto 50px;
+            }
+
+        }
+
+
+        /* VERY SMALL MOBILE */
+
+        @media(max-width: 390px) {
+
+            .hero-text h1 {
+                font-size: 32px;
+            }
+
+            .heart-area {
+                width: 90px;
+            }
+
+            .card-wrapper {
+                width: 94%;
+            }
+
+            .card {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="page">
+
+
+    <!-- =====================================
+         HERO
+    ====================================== -->
+
+    <section class="hero">
+
+        <div class="hero-inner">
+
+
+            <div class="logo-box">
+
+                <img
+                    src="{{ url_for('static', filename='viha.jpeg') }}"
+                    alt="Vihara Tech">
+
+            </div>
+
+
+            <div class="tagline">
+
+                <div class="line"></div>
+
+                LEARN
+
+                <span class="dot">•</span>
+
+                INTERN
+
+                <span class="dot">•</span>
+
+                GET PLACED
+
+                <div class="line"></div>
+
+            </div>
+
+
+            <div class="hero-main">
+
+
+                <div class="hero-text">
+
+                    <h1>
+                        Heart Disease
+                        <br>
+                        <span>Prediction</span>
+                    </h1>
+
+                    <p>
+                        Machine Learning Based Heart Disease Prediction System
+                    </p>
+
+                </div>
+
+
+                <div class="heart-area">
+
+                    <div class="heart-glow"></div>
+
+
+                    <div class="ecg-line">
+
+                        <svg
+                            viewBox="0 0 230 60"
+                            fill="none">
+
+                            <polyline
+                                points="
+                                0,30
+                                40,30
+                                50,30
+                                57,12
+                                65,48
+                                73,22
+                                81,30
+                                110,30
+                                120,30
+                                127,7
+                                136,53
+                                145,22
+                                154,30
+                                230,30
+                                "
+                                stroke="#ef5c83"
+                                stroke-width="3"
+                                fill="none"/>
+
+                        </svg>
+
+                    </div>
+
+
+                    <div class="heart-symbol">
+                        ♥
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         FORM CARD
+    ====================================== -->
+
+    <div class="card-wrapper">
+
+        <div class="card">
+
+
+            <div class="card-header">
+
+                <h2>
+                    Patient Information
+                </h2>
+
+                <div class="small-line"></div>
+
+                <p>
+                    Enter the required details to generate a prediction
+                </p>
+
+            </div>
+
+
+
+            <form action="/predict" method="POST">
+
+
+                <!-- AGE -->
+
+                <div class="form-group">
+
+                    <label for="age">
+                        Age
+                    </label>
+
+                    <input
+                        type="number"
+                        id="age"
+                        name="age"
+                        placeholder="Enter age"
+                        min="1"
+                        max="120"
+                        required>
+
+                    <span class="hint">
+                        Age of the patient in years
+                    </span>
+
+                </div>
+
+
+
+                <!-- SEX -->
+
+                <div class="form-group">
+
+                    <label for="sex">
+                        Sex
+                    </label>
+
+                    <select
+                        id="sex"
+                        name="sex"
+                        required>
+
+                        <option
+                            value=""
+                            selected
+                            disabled>
+
+                            Select sex
+
+                        </option>
+
+                        <option value="1">
+                            Male
+                        </option>
+
+                        <option value="0">
+                            Female
+                        </option>
+
+                    </select>
+
+                    <span class="hint">
+                        Male = 1, Female = 0
+                    </span>
+
+                </div>
+
+
+
+                <!-- CHEST PAIN -->
+
+                <div class="form-group">
+
+                    <label for="cp">
+                        Chest Pain Type (CP)
+                    </label>
+
+                    <select
+                        id="cp"
+                        name="cp"
+                        required>
+
+                        <option
+                            value=""
+                            selected
+                            disabled>
+
+                            Select chest pain type
+
+                        </option>
+
+                        <option value="0">
+                            Type 0
+                        </option>
+
+                        <option value="1">
+                            Type 1
+                        </option>
+
+                        <option value="2">
+                            Type 2
+                        </option>
+
+                        <option value="3">
+                            Type 3
+                        </option>
+
+                    </select>
+
+                    <span class="hint">
+                        Chest pain category (0 - 3)
+                    </span>
+
+                </div>
+
+
+
+                <!-- HEART RATE -->
+
+                <div class="form-group">
+
+                    <label for="thalach">
+                        Maximum Heart Rate (Thalach)
+                    </label>
+
+                    <input
+                        type="number"
+                        id="thalach"
+                        name="thalach"
+                        placeholder="Example: 150"
+                        required>
+
+                    <span class="hint">
+                        Maximum heart rate achieved
+                    </span>
+
+                </div>
+
+
+
+                <!-- OLDPEAK -->
+
+                <div class="form-group">
+
+                    <label for="oldpeak">
+                        Oldpeak
+                    </label>
+
+                    <input
+                        type="number"
+                        step="0.1"
+                        id="oldpeak"
+                        name="oldpeak"
+                        placeholder="Example: 1.4"
+                        required>
+
+                    <span class="hint">
+                        ST depression induced by exercise
+                    </span>
+
+                </div>
+
+
+
+                <!-- SLOPE -->
+
+                <div class="form-group">
+
+                    <label for="slope">
+                        Slope
+                    </label>
+
+                    <select
+                        id="slope"
+                        name="slope"
+                        required>
+
+                        <option
+                            value=""
+                            selected
+                            disabled>
+
+                            Select slope
+
+                        </option>
+
+                        <option value="0">
+                            0
+                        </option>
+
+                        <option value="1">
+                            1
+                        </option>
+
+                        <option value="2">
+                            2
+                        </option>
+
+                    </select>
+
+                    <span class="hint">
+                        Slope of peak exercise ST segment
+                    </span>
+
+                </div>
+
+
+
+                <!-- THAL -->
+
+                <div class="form-group full">
+
+                    <label for="thal">
+                        Thal
+                    </label>
+
+                    <select
+                        id="thal"
+                        name="thal"
+                        required>
+
+                        <option
+                            value=""
+                            selected
+                            disabled>
+
+                            Select Thal value
+
+                        </option>
+
+                        <option value="0">
+                            0
+                        </option>
+
+                        <option value="1">
+                            1
+                        </option>
+
+                        <option value="2">
+                            2
+                        </option>
+
+                        <option value="3">
+                            3
+                        </option>
+
+                    </select>
+
+                    <span class="hint">
+                        Select the patient's Thal value
+                    </span>
+
+                </div>
+
+
+
+                <!-- BUTTON -->
+
+                <div class="button-area">
+
+                    <button
+                        type="submit"
+                        class="predict-btn">
+
+                        Predict Heart Disease &nbsp; →
+
+                    </button>
+
+                </div>
+
+
+            </form>
+
+
+
+            <!-- =====================================
+                 BEFORE PREDICTION
+            ====================================== -->
+
+            {% if prediction is not defined %}
+
+            <div class="prediction-placeholder">
+
+                <div class="result-circle"></div>
+
+                <div class="placeholder-text">
+
+                    <h3>
+                        Your prediction result will appear here
+                    </h3>
+
+                    <p>
+                        Fill in the patient details and click
+                        Predict Heart Disease
+                    </p>
+
+                </div>
+
+            </div>
+
+            {% endif %}
+
+
+
+            <!-- =====================================
+                 PREDICTION RESULT
+            ====================================== -->
+
+            {% if prediction is defined %}
+
+
+                {% if prediction == 1 %}
+
+                <div class="result positive">
+
+                    <h3>
+                        Heart Disease Detected
+                    </h3>
+
+                    <p>
+                        The model predicts the presence
+                        of heart disease.
+                    </p>
+
+                </div>
+
+
+                {% else %}
+
+                <div class="result negative">
+
+                    <h3>
+                        No Heart Disease Detected
+                    </h3>
+
+                    <p>
+                        The model predicts no indication
+                        of heart disease.
+                    </p>
+
+                </div>
+
+                {% endif %}
+
+
+            {% endif %}
+
+
+
+            {% if error %}
+
+            <div class="error">
+
+                {{ error }}
+
+            </div>
+
+            {% endif %}
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================
+         ABOUT
+    ====================================== -->
+
+    <section class="about">
+
+        <h2>
+            About the Project
+        </h2>
+
+        <p>
+            This machine learning based Heart Disease Prediction
+            System analyzes patient information and uses a trained
+            classification model to predict the possible presence
+            of heart disease.
+        </p>
+
+    </section>
+
+
+
+    <!-- =====================================
+         FOOTER
+    ====================================== -->
+
+    <footer>
+
+        <div class="footer-content">
+
+            <p>
+                This project was developed by
+            </p>
+
+            <h2>
+                Himavant Reddy
+            </h2>
+
+            <span>
+                Vihara Tech
+            </span>
+
+        </div>
+
+    </footer>
+
+
+</div>
+
+</body>
+</html>
